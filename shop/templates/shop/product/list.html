@@ -1,0 +1,50 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+        <div class="col-md-3">
+            <h3>Kategorie</h3>
+            <a {% if not category %} {% endif %} href="{% url 'shop:product_list' %}"><h5>All</h5></a>
+
+                {% for c in categories %}
+
+            <a {% if category.slug == c.slug %} {% endif %} href="{{ c.get_absolute_url }}"><h5>{{ c.name }}</h5></a>
+            <br>
+
+                {% endfor %}
+
+        </div>
+
+        <div class="col-md-9">
+
+<h2>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h2>
+<div class="fashion_section_2">
+   <div class="row">
+      {% for product in products %}
+      <div class="col-lg-4 col-sm-4">
+         <div class="box_main">
+            <a href="{{ product.get_absolute_url }}">
+               <img src="{% if product.image %}{{ product.image.url }}
+                         {% else %}{% static 'img/no_image.png' %} {% endif %}">
+           </a>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                            {{ product.price }}zł
+
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+</div>
+
+
+        </div>
+
+
+    </div>
+{% endblock %}
