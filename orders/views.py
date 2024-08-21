@@ -17,11 +17,9 @@ def order_create(request):
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])
-            # clear the cart
             cart.clear()
             order_created(order.id)
             request.session['order_id'] = order.id
-            # redirect to the payment
             return redirect('payment:process')
 
     else:
